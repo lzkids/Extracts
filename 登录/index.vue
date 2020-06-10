@@ -35,7 +35,26 @@ return {
     }
 }
 },
+//生命周期 - 创建完成（访问当前this实例）
+created() {
 
+},
+methods: {
+    // 登录函数
+    login () {
+        this.$refs.loginForm.validator(async valid => {
+            if (valid) {
+                try {
+                    const res = await this.$http.post ('authorizations', this.loginForm)
+                   auth.setUser(res.data.data)
+                   this.$router.push('/')
+                } catch (e) {
+                    this.$message.error('手机号或验证码错误')
+                }
+            }
+        })
+    }
+}
 }
 </script>
 <style scoped>
